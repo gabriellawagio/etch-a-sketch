@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <title>Etch-a-sketch</title>
+</head>
+<body>
+    <div class="top container">
+        <span id="grid-toggle" class="material-symbols-outlined">grid_on<span>
+        <!-- <span class="material-symbols-outlined">ink_eraser</span>
+        <span class="material-symbols-outlined">edit</span>
+        <span class="material-symbols-outlined">palette</span> -->
+    </div>
+    
+    <div id="sketch-area" class="container" ></div>
+    <div id="container">
+        <input type="range" class="slider" id="slider" min="16" max = "100" value="16">
+        <p id="slider-value"></p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+:root{
+    --grid-width: 500px;
+    --accent-color: #b77f30;
+    --inactive-color: rgb(0, 0, 0, 0.25);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+body{
+    background-color: rgba(240, 230, 216, 0.886);
+}
+
+.container{
+    margin: 0 auto;
+    width: var(--grid-width);
+}
+
+.top{
+    display: flex;
+    margin: 100px;
+    margin-top: 100px;
+    padding: 3px;
+    background-color: white;
+    color: var(--inactive-color);
+    width: fit-content;
+    margin-bottom: 6px;
+}
+
+#sketch-area{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    margin: 30px auto 10px auto;
+}
+
+.cell{
+    border: 1px solid whitesmoke;
+}
+
+#grid-toggle{
+    cursor: pointer;
+}
+
+#slider-value{
+    margin: 0 auto;
+    text-align: center;
+}
+.slider{
+    /* -webkit-appearance: none; */
+    appearance: none;
+    width: 70%;
+    background: rgba(240, 213, 174, 0.886);
+    opacity: 0.6;
+    transition: opacity .2s;
+}
+.slider:hover{
+    opacity: 1;
+}
+.slider::-webkit-slider-thumb{
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    background: var(--accent-color);
+    cursor: grab;
+}
+.slider::-webkit-slider-thumb:active{
+    cursor: grabbing;
+}
