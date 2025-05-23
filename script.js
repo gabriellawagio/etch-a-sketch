@@ -3,7 +3,6 @@ const accentColor = getComputedStyle(document.body).getPropertyValue("--accent-c
 const inactiveColor = getComputedStyle(document.body).getPropertyValue("--inactive-color");
 
 
-const container = document.querySelector(".container")
 const sketchArea = document.querySelector('#sketch-area');
 const slider = document.querySelector('#slider');
 const sliderValue = document.querySelector('#slider-value');
@@ -12,51 +11,64 @@ const gridToggle = document.querySelector('#grid-toggle')
 
 let squaresPerSide = 16;
 let gridVisible = false;
+let isDrawing = false;
 
 function toggleGrid() {
     gridVisible = gridVisible  ? false : true;
     gridToggle.style.color = gridVisible  ? accentColor : inactiveColor;
 
-    removeGridCells();
-    createGridCells();
+    removeGridSquares();
+    createGridSquares();
 }
 
-function changeBgColor() {
-    this.style.backgroundColor = 'gray';
+function changeBgColor(e) {
+    if (e.type === 'mousedown'){
+       isDrawing = true;
+       e.target.style.backgroundColor = 'gray';  
+    }
+    else if (e.type === 'mouseover' && isDrawing) {
+        e.target.style.backgroundColor = 'gray';
+        
+    }
+    else isDrawing = false;
 }
 
-function createGridCells() {
+function createGridSquares() {
     const totalSquares = (squaresPerSide **2);
     for (let i = 0; i < totalSquares; i++) {
         const gridCell = document.createElement('div');
+        let widthHeight = 0;
 
         if (gridVisible) {
             widthHeight = `${(parseInt(gridwidth) / squaresPerSide) -2}px`;
             gridCell.style.border = '1px solid whitesmoke';
         } else if (!gridVisible) {
             widthHeight = `${(parseInt(gridwidth) / squaresPerSide)}px`
+            gridCell.style.border = 'none';
         }
         gridCell.style.width = gridCell.style.height = widthHeight; 
-        
-        gridCell.classList.add('cell');
+
+        gridCell.addEventListener('mousedown', (e) => changeBgColor(e));
+        gridCell.addEventListener('mouseover', (e) => changeBgColor(e));
+        gridCell.addEventListener('mouseup', (e) => changeBgColor(e));
+        gridCell.addEventListener('dragstart', (e) => {e.preventDefault()});
 
         sketchArea.appendChild(gridCell);
-
-        gridCell.addEventListener('mouseover', changeBgColor);
     }
 }
 
-function removeGridCells() {
+function removeGridSquares() {
     while (sketchArea.firstChild) {
         sketchArea.removeChild(sketchArea.firstChild)
     }
 }
 
 slider.oninput = function(){
-    let txt = `Grid: ${this.value} by ${this.value}`;
-    sliderValue.innerHTML = txt;
-    removeGridCells();
-    createGridCells(this.value);
+    squaresPerSide = this.value;
+    sliderValue.textContent =`${this.value} by ${this.value} (Resolution)`;
+    removeGridSquares();
+    createGridSquares();
 }
 
-createGridCells();
+gridToggle.addEventListener('click', toggleGrid);
+createGridSquares();
